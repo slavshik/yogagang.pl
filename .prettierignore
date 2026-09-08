@@ -1,0 +1,6 @@
+dist
+node_modules
+package-lock.json
+public/fonts
+# index.html is aligned by hand and carries comments meant for whoever edits it.
+index.html

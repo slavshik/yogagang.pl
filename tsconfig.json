@@ -1,0 +1,28 @@
+/*
+ * Page code. Node globals are absent on purpose: everything under src/ is
+ * shipped to a browser, so process.env in this bundle is a bug rather than a
+ * convenience. The build config is checked separately, in tsconfig.node.json.
+ */
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"types": ["vite/client"],
+
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"exactOptionalPropertyTypes": true,
+
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"noEmit": true,
+		"skipLibCheck": true
+	},
+	"include": ["src"]
+}

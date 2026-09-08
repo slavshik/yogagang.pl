@@ -1,0 +1,443 @@
+/*
+ * yogagang.pl
+ *
+ * Two rules govern everything here:
+ *
+ *   1. The photographs are the only colour. The interface adds none — the palette
+ *      below is sampled straight out of their grid (bone walls, olive-black, the
+ *      pine green of one sweatshirt) so nothing on the page competes with a photo.
+ *
+ *   2. Silence is the material. The gaps between sections are deliberately larger
+ *      than feels comfortable; that emptiness is the design, not an oversight.
+ *      Resist the urge to close them up.
+ */
+
+@font-face {
+	font-family: 'Familjen Grotesk';
+	font-style: normal;
+	font-weight: 400 500;
+	font-display: swap;
+	src: url('/fonts/familjen-grotesk-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F, U+2122, U+2212;
+}
+
+@font-face {
+	font-family: 'Familjen Grotesk';
+	font-style: normal;
+	font-weight: 400 500;
+	font-display: swap;
+	src: url('/fonts/familjen-grotesk-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Used for exactly one sentence on the page. */
+@font-face {
+	font-family: 'Newsreader';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/newsreader-italic-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+2000-206F;
+}
+
+:root {
+	color-scheme: light;
+
+	--paper: #e7e6e0; /* cool bone, green-grey undertone */
+	--chalk: #f5f4f0; /* type over photographs */
+	--ink: #171a12; /* near-black, pulled toward the pine */
+	--pine: #2e4033; /* the sweatshirt — the only accent, links only */
+	--stone: #5e5d54; /* secondary text; dark enough to read at 15px */
+
+	--measure: 58ch;
+	--gutter: clamp(1.5rem, 6vw, 5rem);
+
+	/* The silence. One value so the whole page breathes at the same rate. */
+	--breath: clamp(7rem, 17vw, 15rem);
+
+	--sans: 'Familjen Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 17px;
+	font-weight: 400;
+	line-height: 1.62;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	color: var(--pine);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.22em;
+}
+
+a:focus-visible {
+	outline: 2px solid var(--pine);
+	outline-offset: 4px;
+}
+
+/* ── hero ────────────────────────────────────────────────────────────────────
+ * Full-bleed photograph, type placed low and left, inside the frame's quiet
+ * corner rather than across its subject.
+ */
+
+.hero {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100svh;
+	padding: var(--gutter);
+	overflow: hidden;
+	background: var(--ink);
+	isolation: isolate;
+}
+
+.hero__photo,
+.hero__photo img {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 42%;
+}
+
+/*
+ * Two gradients, each only as deep as the type it has to carry: one under the
+ * words at the foot, a fainter one under the mark at the head. A full scrim
+ * would flatten the photograph, which is the one thing here carrying colour.
+ */
+.hero::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background:
+		linear-gradient(
+			to top,
+			rgb(12 14 10 / 62%) 0%,
+			rgb(12 14 10 / 34%) 26%,
+			rgb(12 14 10 / 0%) 58%
+		),
+		linear-gradient(to bottom, rgb(12 14 10 / 34%) 0%, rgb(12 14 10 / 0%) 26%);
+}
+
+.hero__inner {
+	width: 100%;
+	color: var(--chalk);
+}
+
+.mark {
+	display: block;
+	width: 4.75rem;
+	color: var(--chalk);
+}
+
+.mark svg {
+	width: 100%;
+	height: auto;
+}
+
+.mark__word {
+	display: block;
+	margin-top: 0.55rem;
+	font-size: 12px;
+	letter-spacing: 0.1em;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.hero__words {
+	margin: 0 0 1.1rem;
+	font-size: clamp(1.75rem, 4.4vw, 2.6rem);
+	font-weight: 400;
+	line-height: 1.14;
+	letter-spacing: 0.02em;
+}
+
+.hero__words span {
+	display: block;
+}
+
+.hero__meta {
+	font-size: 14px;
+	letter-spacing: 0.11em;
+	color: rgb(245 244 240 / 78%);
+}
+
+/*
+ * The one motion moment on the page. Each word arrives with its letter-spacing
+ * still open and settles closed — an exhale, staggered down the three lines.
+ * Nothing else on the site moves.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	.js .hero__words span,
+	.js .hero__meta {
+		opacity: 0;
+		animation: settle 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+	}
+
+	.js .hero__words span:nth-child(1) {
+		animation-delay: 0.15s;
+	}
+	.js .hero__words span:nth-child(2) {
+		animation-delay: 0.33s;
+	}
+	.js .hero__words span:nth-child(3) {
+		animation-delay: 0.51s;
+	}
+	.js .hero__meta {
+		animation-delay: 0.82s;
+		animation-duration: 0.9s;
+	}
+}
+
+@keyframes settle {
+	from {
+		opacity: 0;
+		letter-spacing: 0.3em;
+	}
+	to {
+		opacity: 1;
+		letter-spacing: inherit;
+	}
+}
+
+/* ── the column ──────────────────────────────────────────────────────────────
+ * Left-aligned on a column offset from the left edge. Centring this content
+ * would make it read like every other landing page.
+ */
+
+main {
+	max-width: 76rem;
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+.opening,
+.practice,
+.join {
+	max-width: var(--measure);
+	margin-inline-start: 0;
+}
+
+.opening {
+	padding-block: var(--breath) 0;
+}
+
+.lead {
+	margin-bottom: 1.5rem;
+	font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+	line-height: 1.42;
+	letter-spacing: -0.005em;
+	text-wrap: balance;
+}
+
+.opening p + p {
+	color: var(--stone);
+}
+
+/* ── the turn ────────────────────────────────────────────────────────────────
+ * A narrow portrait with the quotation hanging off its lower third. The serif
+ * appears here and nowhere else — it is a quotation of their own poster
+ * typography, so it stays a quotation.
+ */
+
+.turn {
+	display: grid;
+	gap: 2.5rem;
+	padding-block: var(--breath);
+}
+
+.turn__figure {
+	margin: 0;
+	max-width: 24rem;
+}
+
+.turn__quote {
+	margin: 0;
+	max-width: 20ch;
+	font-family: var(--serif);
+	font-style: italic;
+	font-size: clamp(1.6rem, 4.2vw, 2.15rem);
+	line-height: 1.28;
+	color: var(--ink);
+	text-wrap: balance;
+}
+
+@media (min-width: 62rem) {
+	.turn {
+		grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+		gap: clamp(3rem, 7vw, 7rem);
+		align-items: end;
+	}
+
+	.turn__quote {
+		padding-bottom: 2.5rem;
+	}
+}
+
+/* ── practice ────────────────────────────────────────────────────────────── */
+
+.practice__list {
+	margin: 2.75rem 0 0;
+	border-top: 1px solid rgb(23 26 18 / 14%);
+}
+
+.practice__list > div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.15rem 1.5rem;
+	justify-content: space-between;
+	padding-block: 0.95rem;
+	border-bottom: 1px solid rgb(23 26 18 / 14%);
+}
+
+.practice__list dt {
+	font-weight: 500;
+}
+
+.practice__list dd {
+	margin: 0;
+	color: var(--stone);
+	text-align: end;
+}
+
+/*
+ * Narrow enough that at least one row would wrap anyway. Stacking all three
+ * keeps the rhythm even, instead of two rows reading across and one down.
+ */
+@media (max-width: 34rem) {
+	.practice__list > div {
+		display: block;
+		padding-block: 0.85rem;
+	}
+
+	.practice__list dd {
+		text-align: start;
+	}
+}
+
+.practice__note {
+	margin-top: 1.6rem;
+	font-size: 15px;
+	color: var(--stone);
+}
+
+/* ── the wide photograph ─────────────────────────────────────────────────── */
+
+.wide {
+	margin: var(--breath) 0;
+}
+
+/*
+ * A tall portrait cropped to a band. 62% keeps the standing figures in frame;
+ * centring it lands on ceiling and loses the whole point of the shot.
+ */
+.wide img {
+	width: 100%;
+	max-height: 74svh;
+	object-fit: cover;
+	object-position: 50% 62%;
+}
+
+/* ── join ────────────────────────────────────────────────────────────────── */
+
+.join {
+	padding-bottom: var(--breath);
+}
+
+.join__line {
+	font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+	line-height: 1.42;
+	text-wrap: balance;
+}
+
+/*
+ * Deliberately *unlike* the class table above it. That list is a schedule and a
+ * two-column rule suits it; these are the two things a visitor can actually do,
+ * so they get size and their own line instead of another row in another table.
+ */
+.join__links {
+	margin: 2.75rem 0 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: 1.75rem;
+}
+
+.join__links a {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.join__where {
+	display: inline;
+	font-size: clamp(1.1rem, 2vw, 1.3rem);
+	line-height: 1.3;
+	background-image: linear-gradient(var(--pine), var(--pine));
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 100% 1px;
+	transition: background-size 220ms ease;
+}
+
+.join__handle {
+	display: block;
+	margin-top: 0.3rem;
+	color: var(--stone);
+	font-size: 14px;
+	letter-spacing: 0.04em;
+}
+
+.join__links a:hover .join__where {
+	background-size: 100% 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.join__where {
+		transition: none;
+	}
+}
+
+/* ── foot ────────────────────────────────────────────────────────────────── */
+
+.foot {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 2rem;
+	justify-content: space-between;
+	max-width: 76rem;
+	margin: 0 auto;
+	padding: 0 var(--gutter) 3.5rem;
+	font-size: 14px;
+	color: var(--stone);
+}

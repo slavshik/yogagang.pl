@@ -1,0 +1,11 @@
+/*
+ * The build config. This one runs in Node, so it is the only place that may
+ * reach for process.env — which is exactly where the Umami website id arrives.
+ */
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"types": ["node"]
+	},
+	"include": ["vite.config.ts"]
+}
