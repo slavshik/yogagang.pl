@@ -6,6 +6,24 @@ Live at <https://yogagang.pl> once the domain points at GitHub Pages. Two steps 
 both need a human: [docs/dns.md](docs/dns.md) for the DNS records, and
 [docs/analytics.md](docs/analytics.md) to switch analytics on.
 
+## Commits
+
+Conventional Commits, no exceptions:
+
+```
+<type>[optional scope]: <description>
+
+[body]
+
+[footers]
+```
+
+`feat` and `fix` for anything that changes the page, `docs` for prose, `build` for Vite,
+npm or the Makefile, `ci` for the workflows, `chore` for the rest. `style` means whitespace
+and formatting, not CSS — a visual change is `feat` or `fix`. Description in the imperative
+and lower case, header under about 72 characters, breaking changes marked `!` before the
+colon. The body is for why, not what; the diff already says what.
+
 ## Running it
 
 ```sh
